@@ -1,5 +1,6 @@
 // cara membuat object dengan JS
 // 1. object literal
+// cons: tidak efektif untuk object yang banyak
 let mhs = {
   nama: "galih",
   energi: 10,
@@ -27,6 +28,30 @@ function Mhs(nama, energi) {
 let mhsGalih = Mhs(`galih`, 10);
 let mhsAriza = Mhs(`Arizza`, 20);
 
+// cons: diatas methodnya tetap dibuat lagi seperti object literal oleh js di memori yang sama saja memakan resource. cara untuk handlenya adalah membuat method terpisah, seperti dibawah.
+// cons kedua jika memakai method ini, jika ada method baru yang di buat maka harus membuat declarasi baru di objectnya agar tetap sync. untuk membuat deklarasi baru secara otomatis bisa menggunakan object.create()
+const methodMhs = {
+  makan: function (porsi) {
+    this.energi += porsi;
+    console.log(`${this.nama}, energi kamu bertambah`);
+  },
+  main: function (energi) {
+    this.energi -= energi;
+    console.log(`${this.nama}, awas energimu habis`);
+  },
+};
+
+function Mhs2(nama, energi) {
+  let mhs3 = {};
+  mhs3.nama = nama;
+  mhs3.energi = energi;
+  mhs3.makan = methodMhs.makan;
+  mhs3.main = methodMhs.main;
+  return mhs3;
+}
+
+const mhsAditya = Mhs2(`aditya`, 20);
+
 // 3. constructor function
 // keyword new
 function MhsConstructor(nama, energi) {
@@ -45,3 +70,26 @@ function MhsConstructor(nama, energi) {
 let mhsCandra = new MhsConstructor(`Candra`, 50);
 
 // 4. object. create
+const methodEnergi = {
+  makan: function (porsi) {
+    this.energi += porsi;
+    console.log(`${this.nama}, energimu bertambah! ${porsi}`);
+  },
+  fight: function (energi) {
+    this.energi -= energi;
+    console.log(`${this.nama}, energimu berkurang! ${energi}`);
+  },
+  tidur: function (jam) {
+    this.energi += jam * 2;
+    console.log(`${this.nama}, energimu bertambah 2x lipat! ${jam * 2}`);
+  },
+};
+
+function Char(nama, energi) {
+  let char = Object.create(methodEnergi);
+  char.nama = nama;
+  char.energi = energi;
+  return char;
+}
+
+let charGalih = Char(`Assasin Galih`, 100);
