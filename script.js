@@ -93,3 +93,66 @@ function Char(nama, energi) {
 }
 
 let charGalih = Char(`Assasin Galih`, 100);
+
+// 5. pakai metode prototype
+// versi prototype inheriten
+function CharP(nama, energi) {
+  this.nama = nama;
+  this.energi = energi;
+}
+
+CharP.prototype.makan = function (porsi) {
+  this.energi += porsi;
+  console.log(
+    `${this.nama}, energimu bertambah ${porsi}, energimu menjadi ${this.energi}`
+  );
+};
+
+CharP.prototype.fight = function (jam) {
+  this.energi -= jam;
+  console.log(
+    `${this.nama}, energimu berkurang setelah bertarung sebannyak ${jam}, energimu sekarang ${this.energi}`
+  );
+};
+
+CharP.prototype.tidur = function (jam) {
+  this.energi += jam * 2;
+  console.log(
+    `${this.nama}, energimu bertambah ${jam * 2}, energimu menjadi ${
+      this.energi
+    }`
+  );
+};
+
+let charArizza = new CharP(`Priest Arizza`, 200);
+
+// prototype diatas bisa juga dibuat dengan kelas seperti contoh dibawah
+// versi prototype class
+class CharPC {
+  constructor(nama, energi) {
+    this.nama = nama;
+    this.energi = energi;
+  }
+  heal(hp) {
+    this.energi += hp;
+    console.log(
+      `${this.nama}, berhasil menambah energi sebanyak ${hp}, energimu sekarang ${this.energi}`
+    );
+  }
+  fight(hp) {
+    this.energi -= hp;
+    console.log(
+      `${this.nama}, energimu berkurang setelah bertarung sebanyak ${hp}, energimu sekarang ${this.energi}`
+    );
+  }
+  tidur(heal) {
+    this.energi += heal * 2;
+    console.log(
+      `${this.nama} tidur berhasil menambah ${
+        heal * 2
+      } energi. Energimu sekrang ${this.energi}`
+    );
+  }
+}
+
+let charPCGalih = new CharPC(`Knight Galih`, 500);
